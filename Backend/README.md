@@ -97,3 +97,92 @@ This endpoint allows new users to create an account by providing their personal 
 - Password must be at least 6 characters long
 - First name must be at least 3 characters long
 - Last name must be at least 3 characters long
+
+## POST /users/login
+
+Authenticate an existing user.
+
+### Description
+This endpoint allows users to login to their account using their email and password.
+
+### Request
+- Method: `POST`
+- URL: `/users/login`
+- Content-Type: `application/json`
+
+### Request Body Parameters
+| Parameter | Type   | Required | Description                    |
+|-----------|--------|----------|--------------------------------|
+| email     | string | Yes      | User's registered email       |
+| password  | string | Yes      | User's password (min 6 chars) |
+
+### Example Request
+```json
+{
+    "email": "john.doe@example.com",
+    "password": "securepass123"
+}
+```
+
+### Response
+
+#### Success Response
+- Status Code: `200 OK`
+- Content-Type: `application/json`
+
+```json
+{
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+    "user": {
+        "_id": "12345",
+        "email": "john.doe@example.com",
+        "fullName": {
+            "firstName": "John",
+            "lastName": "Doe"
+        },
+        "socketId": null
+    }
+}
+```
+
+#### Error Responses
+
+##### Invalid Credentials
+- Status Code: `401 Unauthorized`
+```json
+{
+    "message": "invalid email or password"
+}
+```
+
+##### Invalid Input
+- Status Code: `400 Bad Request`
+```json
+{
+    "errors": [
+        {
+            "msg": "The Email Is Not Valid",
+            "param": "email",
+            "location": "body"
+        },
+        {
+            "msg": "The Password Should Have Atleast Six Characters",
+            "param": "password",
+            "location": "body"
+        }
+    ]
+}
+```
+
+##### Server Error
+- Status Code: `500 Internal Server Error`
+```json
+{
+    "status": "error",
+    "message": "Internal server error"
+}
+```
+
+### Validation Rules for Login
+- Email must be in  valid email format
+- Password must be at least 6 characters long
