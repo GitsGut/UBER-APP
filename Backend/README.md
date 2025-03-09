@@ -13,17 +13,21 @@ This endpoint allows new users to create an account by providing their personal 
 - Content-Type: `application/json`
 
 ### Request Body Parameters
-| Parameter  | Type     | Required | Description                     |
-|------------|----------|----------|---------------------------------|
-| name       | string   | Yes      | User's full name               |
-| email      | string   | Yes      | User's email address           |
-| password   | string   | Yes      | User's password (min 6 chars)  |
-| phone      | string   | Yes      | User's phone number            |
+| Parameter        | Type     | Required | Description                     |
+|-----------------|----------|----------|---------------------------------|
+| fullName        | object   | Yes      | User's full name object        |
+| fullName.firstName | string | Yes      | User's first name (min 3 chars) |
+| fullName.lastName  | string | Yes      | User's last name (min 3 chars)  |
+| email           | string   | Yes      | User's email address           |
+| password        | string   | Yes      | User's password (min 6 chars)  |
 
 ### Example Request
 ```json
 {
-    "name": "John Doe",
+    "fullName": {
+        "firstName": "John",
+        "lastName": "Doe"
+    },
     "email": "john.doe@example.com",
     "password": "securepass123"
 }
@@ -89,7 +93,7 @@ This endpoint allows new users to create an account by providing their personal 
 ```
 
 ### Validation Rules
-- Email must be a valid email format
+- Email must be a valid email format and at least 6 characters
 - Password must be at least 6 characters long
-- Name must not be empty
-- Phone number must be a valid format
+- First name must be at least 3 characters long
+- Last name must be at least 3 characters long
