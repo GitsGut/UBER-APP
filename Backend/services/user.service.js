@@ -20,5 +20,5 @@ module.exports.createUser = async (
 module.exports.findUserByEmail = async (email)=>
 {
     const user = userModel.findOne({email});
-    return user ;
+    
 }
