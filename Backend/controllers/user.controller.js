@@ -13,15 +13,15 @@ module.exports.registerUser = async (req, res, next) => {
       });
     }
 
-    const { email, firstName, lastName, password, phone } = req.body;
+    const { email, fullName , password } = req.body;
 
     const HashedPassword = await userModel.hashPassword(password);
     const user = await userService.createUser({
       email,
-      firstName,
-      lastName,
+      firstName : fullName.firstName,
+      lastName  : fullName.lastName,
       password: HashedPassword,
-      phone,
+    
     });
 
     const token = user.generateAuthToken();
@@ -56,4 +56,9 @@ module.exports.loginUser = async (req, res, next) => {
    catch (error) {
     next(error);
   }
+}
+
+module.exports.getProfile = async(req,res,next)=>
+{
+     res.status(200).json(req.user);
 }
