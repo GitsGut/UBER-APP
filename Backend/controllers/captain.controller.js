@@ -72,7 +72,7 @@ module.exports.getProfile = async(req,res,next)=>
     res.status(200).json(req.captain);
 }
 module.exports.logoutCaptain = async(req,res,next)=>
-{   const token =  req.cookies.token || req.headers.authorization()?.split()[1];
+{   const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
     await blacklistTokenModel.create({token});
     res.clearCookie('token');
     res.status(200).json({message:"Logout Successful"});
